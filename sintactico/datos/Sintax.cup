@@ -1,0 +1,58 @@
+package analizadorSintactico;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+
+    public void syntax_error (Symbol s){
+        this.s=s;
+    }
+    
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+terminal VACIO, Mayuscula, Punto,  MAYUSCULA, Minuscula, Punto_coma, ERROR, Comillas, Coma, Dos_puntos;
+
+non terminal INICIO, Palabra, PALABRA , SENTENCIA;
+
+start with INICIO;
+
+INICIO ::= PALABRA Punto|
+Palabra Punto|
+PALABRA Punto INICIO|
+Palabra Punto INICIO 
+;
+
+PALABRA ::= 
+    MAYUSCULA |
+    MAYUSCULA PALABRA |
+    MAYUSCULA Coma PALABRA |   
+    MAYUSCULA Punto_coma  PALABRA | 
+    MAYUSCULA Dos_puntos  PALABRA | 
+    Comillas MAYUSCULA Comillas PALABRA 
+;
+
+Palabra ::= 
+    Mayuscula |
+    Mayuscula Palabra |
+    Mayuscula SENTENCIA |
+    Mayuscula Coma Palabra |   
+    Mayuscula Coma SENTENCIA |   
+    Mayuscula Dos_puntos SENTENCIA |   
+    Mayuscula Punto_coma SENTENCIA 
+;
+
+SENTENCIA ::=
+    Minuscula |
+    Minuscula Palabra |
+    Minuscula SENTENCIA |
+    Minuscula Coma SENTENCIA |
+    Minuscula Punto_coma Palabra |
+    Minuscula Dos_puntos  SENTENCIA | 
+    Minuscula Dos_puntos  Palabra  
+;
+

@@ -1,0 +1,1062 @@
+package semanticopf;
+import java_cup.runtime.Symbol;
+import java.util.HashMap;
+import semanticopf.utiles.Utiles;
+import semanticopf.modelo.Correccion;
+
+parser code
+{:
+    private Symbol s;
+    public void syntax_error (Symbol s){
+        this.s = s;
+    }
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+action code
+{:
+    private String terminacion = "";
+    private String palabra ="";
+    private String corrector = "";
+    private Integer tamaño = 0;
+    private Integer tipo;
+    public HashMap variables = new HashMap(); 
+:}
+
+terminal  Mayuscula, MAYUSCULA, Minuscula, Comillas, Punto_y_coma, Dos_puntos, Coma, Punto, Parentesis_a, Parentesis_c, Corchete_a, Corchete_c, Numero, PalabraUN, Palabraun, PalabracUN, Palabracun, Palabra, PalabraION, Palabraion, PalabracION, Palabracion, PalabraMP, PalabraNP, Palabranp, PalabraMB,
+Palabramb, PalabraNB, Palabranb, Palabramp, Palabra2, ERROR;
+
+non terminal INICIO, GRAMATICA, PUNTUACION;
+
+start with INICIO;
+INICIO ::= GRAMATICA | Comillas GRAMATICA Comillas Punto | GRAMATICA Punto | Comillas GRAMATICA Comillas GRAMATICA Punto |
+    GRAMATICA Comillas GRAMATICA Comillas GRAMATICA Punto | GRAMATICA Punto GRAMATICA Punto;
+
+
+GRAMATICA ::= 
+
+Palabra2 | 
+Palabra2 PUNTUACION | 
+Palabra2 GRAMATICA | 
+Palabra2 PUNTUACION GRAMATICA | 
+Palabra2 Numero | 
+Palabra2 Numero GRAMATICA
+| Numero  PUNTUACION
+
+| Palabraun:un
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("un")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ún");
+                //cadenafinal="oposicion";
+        }  
+    }   
+:}
+| Palabraun:un GRAMATICA 
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("un")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ún");
+                //cadenafinal="oposicion";
+        }  
+    } 
+:}
+| Palabraun:un PUNTUACION GRAMATICA 
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("un")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ún");
+                //cadenafinal="oposicion";
+        }  
+    } 
+:}
+| Palabraun:un Numero GRAMATICA
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("un")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ún");
+                //cadenafinal="oposicion";
+        }  
+    } 
+:}
+| Palabraion:ion 
+{:
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("cion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"ción");
+    }if (cade1.equalsIgnoreCase("sion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"sión");
+    }
+:}
+
+| Palabraion:ion GRAMATICA 
+{:
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("cion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"ción");
+    }if (cade1.equalsIgnoreCase("sion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"sión");
+    }
+:}
+| Palabraion:ion PUNTUACION 
+{:
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("cion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"ción");
+    }if (cade1.equalsIgnoreCase("sion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"sión");
+    }
+:}
+| Palabraion:ion PUNTUACION GRAMATICA 
+{:
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("cion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"ción");
+    }if (cade1.equalsIgnoreCase("sion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"sión");
+    }
+:}
+| Palabraion:ion Numero GRAMATICA
+{:
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("cion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"ción");
+    }if (cade1.equalsIgnoreCase("sion")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"sión");
+    }
+:}
+| Palabranp:np 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anp")) {
+        System.out.println("PALABRA CORRECTA -> " + "amp"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enp")) {
+        System.out.println("PALABRA CORRECTA -> " + "emp"+cade1);
+    }if (cade.equalsIgnoreCase("inp")) {
+        System.out.println("PALABRA CORRECTA -> " + "imp"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conp")) {
+        System.out.println("PALABRA CORRECTA -> " + "comp"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canp")) {
+        System.out.println("PALABRA CORRECTA -> " + "camp"+cade3);
+    }if (cade2.equalsIgnoreCase("lanp")) {
+        System.out.println("PALABRA CORRECTA -> " + "lamp"+cade3);
+    }if (cade2.equalsIgnoreCase("linp")) {
+        System.out.println("PALABRA CORRECTA -> " + "linp"+cade3);
+    }
+    
+:}
+| Palabranp:np GRAMATICA 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anp")) {
+        System.out.println("PALABRA CORRECTA -> " + "amp"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enp")) {
+        System.out.println("PALABRA CORRECTA -> " + "emp"+cade1);
+    }if (cade.equalsIgnoreCase("inp")) {
+        System.out.println("PALABRA CORRECTA -> " + "imp"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conp")) {
+        System.out.println("PALABRA CORRECTA -> " + "comp"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canp")) {
+        System.out.println("PALABRA CORRECTA -> " + "camp"+cade3);
+    }if (cade2.equalsIgnoreCase("lanp")) {
+        System.out.println("PALABRA CORRECTA -> " + "lamp"+cade3);
+    }if (cade2.equalsIgnoreCase("linp")) {
+        System.out.println("PALABRA CORRECTA -> " + "linp"+cade3);
+    }
+    
+:}
+| Palabranp:np PUNTUACION 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anp")) {
+        System.out.println("PALABRA CORRECTA -> " + "amp"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enp")) {
+        System.out.println("PALABRA CORRECTA -> " + "emp"+cade1);
+    }if (cade.equalsIgnoreCase("inp")) {
+        System.out.println("PALABRA CORRECTA -> " + "imp"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conp")) {
+        System.out.println("PALABRA CORRECTA -> " + "comp"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canp")) {
+        System.out.println("PALABRA CORRECTA -> " + "camp"+cade3);
+    }if (cade2.equalsIgnoreCase("lanp")) {
+        System.out.println("PALABRA CORRECTA -> " + "lamp"+cade3);
+    }if (cade2.equalsIgnoreCase("linp")) {
+        System.out.println("PALABRA CORRECTA -> " + "linp"+cade3);
+    }
+    
+    
+:}
+| Palabranp:np PUNTUACION GRAMATICA 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anp")) {
+        System.out.println("PALABRA CORRECTA -> " + "amp"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enp")) {
+        System.out.println("PALABRA CORRECTA -> " + "emp"+cade1);
+    }if (cade.equalsIgnoreCase("inp")) {
+        System.out.println("PALABRA CORRECTA -> " + "imp"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conp")) {
+        System.out.println("PALABRA CORRECTA -> " + "comp"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canp")) {
+        System.out.println("PALABRA CORRECTA -> " + "camp"+cade3);
+    }if (cade2.equalsIgnoreCase("lanp")) {
+        System.out.println("PALABRA CORRECTA -> " + "lamp"+cade3);
+    }if (cade2.equalsIgnoreCase("linp")) {
+        System.out.println("PALABRA CORRECTA -> " + "linp"+cade3);
+    }
+    
+    
+:}
+| Palabranp:np Numero GRAMATICA
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anp")) {
+        System.out.println("PALABRA CORRECTA -> " + "amp"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enp")) {
+        System.out.println("PALABRA CORRECTA -> " + "emp"+cade1);
+    }if (cade.equalsIgnoreCase("inp")) {
+        System.out.println("PALABRA CORRECTA -> " + "imp"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conp")) {
+        System.out.println("PALABRA CORRECTA -> " + "comp"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canp")) {
+        System.out.println("PALABRA CORRECTA -> " + "camp"+cade3);
+    }if (cade2.equalsIgnoreCase("lanp")) {
+        System.out.println("PALABRA CORRECTA -> " + "lamp"+cade3);
+    }if (cade2.equalsIgnoreCase("linp")) {
+        System.out.println("PALABRA CORRECTA -> " + "linp"+cade3);
+    }
+    
+    
+:}
+| Palabranb:nb 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:}
+| Palabranb:nb GRAMATICA 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+ 
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:}
+| Palabranb:nb PUNTUACION 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:}
+| Palabranb:nb PUNTUACION GRAMATICA 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:}
+| Palabranb:nb Numero GRAMATICA 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:}
+| Palabranb:nb Numero
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("anb")) {
+        System.out.println("PALABRA CORRECTA -> " + "amb"+cade1);
+    
+    }if (cade.equalsIgnoreCase("enb")) {
+        System.out.println("PALABRA CORRECTA -> " + "emb"+cade1);
+    }if (cade.equalsIgnoreCase("onb")) {
+        System.out.println("PALABRA CORRECTA -> " + "omb"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("conb")) {
+        System.out.println("PALABRA CORRECTA -> " + "comb"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("canb")) {
+        System.out.println("PALABRA CORRECTA -> " + "camb"+cade3);
+    }
+:} 
+| Palabracun | Palabracun GRAMATICA | Palabracun PUNTUACION GRAMATICA | Palabracun Numero GRAMATICA
+| Palabracion | Palabracion GRAMATICA | Palabracion PUNTUACION GRAMATICA | Palabracion Numero GRAMATICA
+| Palabramb | Palabramb GRAMATICA | Palabramb PUNTUACION GRAMATICA | Palabramb Numero GRAMATICA
+| Palabramp | Palabramp GRAMATICA | Palabramp PUNTUACION GRAMATICA | Palabramp Numero GRAMATICA
+| PalabracUN | PalabracUN GRAMATICA | PalabracUN PUNTUACION GRAMATICA | PalabracUN Numero GRAMATICA
+| PalabracION | PalabracION GRAMATICA | PalabracION PUNTUACION GRAMATICA | PalabracION Numero GRAMATICA
+| PalabraMB | PalabraMB GRAMATICA | PalabraMB PUNTUACION GRAMATICA | PalabraMB Numero GRAMATICA
+| PalabraMP | PalabraMP GRAMATICA | PalabraMP PUNTUACION GRAMATICA | PalabraMP Numero GRAMATICA
+| PalabraUN:un
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("UN")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ÚN");
+                //cadenafinal="oposicion";
+        }  
+    }   
+:}
+| PalabraUN:un GRAMATICA 
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("UN")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ÚN");
+                //cadenafinal="oposicion";
+        }  
+    }   
+:}
+| PalabraUN:un PUNTUACION GRAMATICA 
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("UN")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ÚN");
+                //cadenafinal="oposicion";
+        }  
+    }   
+:}
+| PalabraUN:un Numero GRAMATICA
+{:
+    terminacion = un.toString();
+    String cadeun = terminacion;
+    String cadeun2 = terminacion;
+    tamaño = terminacion.length();
+    cadeun = terminacion.substring(0, terminacion.length()-2);
+    cadeun2 = terminacion.substring(terminacion.length()-2);
+
+    if(terminacion.length()>2){
+        System.out.println("PALABRA INCORRECTA -> "+cadeun+cadeun2);
+        if (cadeun2.equalsIgnoreCase("UN")) {
+            System.out.println("PALABRA CORRECTA -> " +cadeun+"ÚN");
+                //cadenafinal="oposicion";
+        }  
+    }   
+:}
+| PalabraION:ion 
+{:  
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("CION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"CIÓN");
+    }if (cade1.equalsIgnoreCase("SION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"SIÓN");
+    }
+:}
+| PalabraION:ion GRAMATICA 
+{:  
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("CION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"CIÓN");
+    }if (cade1.equalsIgnoreCase("SION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"SIÓN");
+    }
+:}
+| PalabraION:ion PUNTUACION GRAMATICA 
+{:  
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("CION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"CIÓN");
+    }if (cade1.equalsIgnoreCase("SION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"SIÓN");
+    }
+:}
+| PalabraION:ion Numero GRAMATICA
+{:  
+    terminacion = ion.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    cade = terminacion.substring(0, terminacion.length()-4);
+    cade1 = terminacion.substring(terminacion.length()-4);
+    
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade1.equalsIgnoreCase("CION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"CIÓN");
+    }if (cade1.equalsIgnoreCase("SION")) {
+        System.out.println("PALABRA CORRECTA -> " +cade+"SIÓN");
+    }
+:}
+| PalabraNP:np 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMP"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENP")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMP"+cade1);
+    }if (cade.equalsIgnoreCase("INP")) {
+        System.out.println("PALABRA CORRECTA -> " + "IMP"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONP")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMP"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LINP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LIMP"+cade3);
+    }
+    
+:}
+| PalabraNP:np GRAMATICA 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMP"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENP")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMP"+cade1);
+    }if (cade.equalsIgnoreCase("INP")) {
+        System.out.println("PALABRA CORRECTA -> " + "IMP"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONP")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMP"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LINP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LIMP"+cade3);
+    }
+    
+:}
+| PalabraNP:np PUNTUACION GRAMATICA 
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMP"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENP")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMP"+cade1);
+    }if (cade.equalsIgnoreCase("INP")) {
+        System.out.println("PALABRA CORRECTA -> " + "IMP"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONP")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMP"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LINP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LIMP"+cade3);
+    }
+    
+:}
+| PalabraNP:np Numero GRAMATICA
+{:
+    terminacion = np.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMP"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENP")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMP"+cade1);
+    }if (cade.equalsIgnoreCase("INP")) {
+        System.out.println("PALABRA CORRECTA -> " + "IMP"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONP")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMP"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LANP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LAMP"+cade3);
+    }if (cade2.equalsIgnoreCase("LINP")) {
+        System.out.println("PALABRA CORRECTA -> " + "LIMP"+cade3);
+    }
+    
+:}
+| PalabraNB:nb 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMB"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENB")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMB"+cade1);
+    }if (cade.equalsIgnoreCase("ONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "OMB"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMB"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMB"+cade3);
+    }
+:}
+| PalabraNB:nb GRAMATICA 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMB"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENB")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMB"+cade1);
+    }if (cade.equalsIgnoreCase("ONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "OMB"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMB"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMB"+cade3);
+    }
+:}
+| PalabraNB:nb PUNTUACION GRAMATICA 
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMB"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENB")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMB"+cade1);
+    }if (cade.equalsIgnoreCase("ONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "OMB"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMB"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMB"+cade3);
+    }
+:}
+| PalabraNB:nb Numero GRAMATICA
+{:
+    terminacion = nb.toString();
+    String cade = terminacion;
+    String cade1 = terminacion;
+    String cade2 = terminacion;
+    String cade3 = terminacion;
+    String cadenafinal="";
+    tamaño = terminacion.length();
+    Integer x = 3;
+    Integer y = 4;
+    cade = terminacion.substring(0, x);
+    cade1 = terminacion.substring(x, terminacion.length());
+
+    cade2 = terminacion.substring(0, y);
+    cade3 = terminacion.substring(y, terminacion.length());
+    
+
+    System.out.println("PALABRA INCORRECTA -> "+cade+cade1);
+    if (cade.equalsIgnoreCase("ANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "AMB"+cade1);
+    
+    }if (cade.equalsIgnoreCase("ENB")) {
+        System.out.println("PALABRA CORRECTA -> " + "EMB"+cade1);
+    }if (cade.equalsIgnoreCase("ONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "OMB"+cade1);
+    }
+
+    if (cade2.equalsIgnoreCase("CONB")) {
+        System.out.println("PALABRA CORRECTA -> " + "COMB"+cade3);
+    
+    }if (cade2.equalsIgnoreCase("CANB")) {
+        System.out.println("PALABRA CORRECTA -> " + "CAMB"+cade3);
+    }
+:}
+;
+
+
+PUNTUACION ::= 
+    Punto_y_coma | Coma | Dos_puntos;
